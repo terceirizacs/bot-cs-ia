@@ -1,0 +1,6 @@
+.DS_Store
+# Claude Code — pessoal/local
+.claude/settings.local.json
+.claude/agent-memory-local/
+CLAUDE.local.md
+.envrc
