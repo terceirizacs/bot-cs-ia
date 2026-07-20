@@ -54,6 +54,8 @@ A maioria esmagadora dos pedidos é **configurável**. A lista de itens estrutur
 
 > ⚠️ Se o bot está "inventando" ou errando uma resposta: na maioria das vezes a informação certa **não está cadastrada**. Cadastre-a na Base de Conhecimento (ou Catálogo) — não é um defeito do bot.
 
+> 💡 **O bot já sabe o nome do cliente** (e também e-mail e telefone) automaticamente — esses dados vêm do contato no WhatsApp/Chatwoot, então **não há campo no painel pra preencher isso** e o bot consegue chamar a pessoa pelo nome sozinho. Por privacidade, ele não fica repetindo e-mail/telefone do cliente sem ser pedido. Se o **nome** estiver aparecendo errado, corrija o **contato dentro do Chatwoot** (não é ajuste do painel do bot).
+
 ---
 
 ## Tabela: quando passar pra um humano
