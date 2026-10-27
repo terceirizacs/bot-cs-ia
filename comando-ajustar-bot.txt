@@ -1,0 +1,229 @@
+O cliente é: [NOME DO CLIENTE]
+
+Estamos ajustando a IA desse cliente. É uma conversa urgente, precisa ser rápido e objetivo.
+
+COMO VAMOS TRABALHAR
+1. Agora: localize o cliente no banco (somente leitura; o nome pode estar sem acento), confira se está ativo, a inbox, o nome do bot, a empresa, o tom e a postura, e responda só "Pronto, pode mandar o primeiro ID".
+2. Eu vou explicar o que achei errado e mandar o ID da conversa.
+3. Você lê a conversa (tabela mensagens_chatwoot, filtrando chatwoot_conversation_id = ID e o cliente_id, em ordem de horário) e o cadastro atual dos campos ligados ao problema (clientes.briefing).
+4. Me diga a causa em 1 ou 2 linhas (regra não existe, existe mas está fraca/escondida, falta informação, ou CONFLITO com algo já cadastrado) e onde alterar. Seja direto.
+5. Se for estrutural (precisa de dev), avise e me dê o resumo pronto pro chamado.
+
+REGRAS
+- O banco é SOMENTE LEITURA. Nunca altere nada. As mudanças eu faço pelo painel.
+- Nunca invente dados (links, caminhos, valores, horários). Se não estiver no banco, use [colchetes] e me avise.
+- Em campos de tom/estratégia, descreva a intenção, nunca uma frase pronta (o bot recita literalmente). Resposta de FAQ pode ser literal.
+- Sempre que for substituir algo, me dê uma palavra-chave para eu achar com Ctrl+F.
+- Cada informação em bloco separado, para eu copiar e colar sem erro.
+
+A PÁGINA (ARTIFACT)
+Transforme as orientações em uma página (artifact), usando EXATAMENTE o modelo HTML no fim desta mensagem:
+- Mantenha o <style> e o <script> sem nenhuma mudança. Troque só o conteúdo entre <header> e <footer> (o conteúdo do modelo é só um exemplo).
+- Uma página só para a conversa toda. Cada novo ID entra como uma nova seção na mesma página (mesmo link): <h2>Conversa ID: problema</h2> + caixa "case" com o trecho da conversa (falas ruins em class="bad") e uma nota "Por que aconteceu".
+- Um <article class="card" data-conversa="ID"> por campo do painel, numerado em sequência. Em cada um:
+  • Caminho "Seção → Campo" com o nome que aparece na tela.
+  • Etiqueta: "Adicionar item" (pill add), "Substituir" (pill rep) ou "Conferir" (pill opt).
+  • Ctrl+F com a palavra-chave dentro de <dd><kbd>…</kbd></dd> (o script cria sozinho o botão "Copiar busca").
+  • Linha dizendo exatamente o que apagar e onde colar.
+  • Um texto com botão "Copiar" por subcampo (ex.: FAQ = Pergunta e Resposta separadas), com ids únicos na página toda.
+- Já está no script: quadrado "Pendente/Copiado" em cada bloco, borda vermelha enquanto pendente e o bloco inteiro fica verde-escuro na hora em que eu clico em "Copiar".
+- Campo de escolha (select): sem texto para colar, só diga qual opção marcar e quais são as opções válidas.
+- Título da página: "Ajustes Bot [Cliente]".
+
+===== MODELO HTML (não alterar style e script) =====
+<title>Ajustes Bot Léo Simão</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: coluna única de "fichas de ajuste", uma por campo do painel, agrupadas por conversa */
+:root{
+  --bg:#f3f5f2; --surface:#ffffff; --fg:#1d2420; --muted:#5d6862; --line:#d9dfda;
+  --accent:#2f6f5e; --accent-soft:#e2efe9; --warn:#9a5b00; --warn-soft:#fbf0dc;
+  --code-bg:#f6f8f6; --add:#2f6f5e; --rep:#3b5b9a; --rep-soft:#e5ebf7;
+  --display:"Fraunces",Georgia,serif; --body:"Figtree",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141917; --surface:#1c2320; --fg:#e6ece8; --muted:#9aa6a0; --line:#2e3833;
+  --accent:#7cc4ad; --accent-soft:#1f3a32; --warn:#f0b25a; --warn-soft:#3a2c17;
+  --code-bg:#121715; --add:#7cc4ad; --rep:#9db6ec; --rep-soft:#232c40; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141917; --surface:#1c2320; --fg:#e6ece8; --muted:#9aa6a0; --line:#2e3833;
+  --accent:#7cc4ad; --accent-soft:#1f3a32; --warn:#f0b25a; --warn-soft:#3a2c17;
+  --code-bg:#121715; --add:#7cc4ad; --rep:#9db6ec; --rep-soft:#232c40; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:18px}
+header{display:flex;flex-direction:column;gap:4px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{font-family:var(--display);font-weight:600;font-size:28px;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-weight:600;font-size:20px;margin:10px 0 0;text-wrap:balance}
+p{margin:0}
+.case{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.chat{font-family:var(--mono);font-size:13px;background:var(--code-bg);border-radius:6px;padding:10px 12px;display:flex;flex-direction:column;gap:3px;overflow-x:auto}
+.chat .bad{color:var(--warn);font-weight:500}
+.note{background:var(--warn-soft);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.note b{color:var(--warn)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.card-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.num{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.path{font-weight:600}
+.pill{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:99px}
+.pill.add{background:var(--accent-soft);color:var(--add)}
+.pill.rep{background:var(--rep-soft);color:var(--rep)}
+.pill.opt{background:var(--warn-soft);color:var(--warn)}
+.meta{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;font-size:14px}
+.meta dt{color:var(--muted)}
+.meta dd{margin:0;min-width:0}
+kbd{font-family:var(--mono);font-size:13px;background:var(--code-bg);border:1px solid var(--line);border-radius:4px;padding:1px 6px;word-break:break-word}
+.copy{display:flex;flex-direction:column;gap:6px}
+.copy-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.label{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+pre{margin:0;background:var(--code-bg);border:1px solid var(--line);border-radius:6px;padding:12px;font-family:var(--mono);font-size:13px;white-space:pre-wrap;word-break:break-word}
+button{font:600 13px var(--body);background:var(--accent);color:var(--surface);border:0;border-radius:6px;padding:6px 12px;cursor:pointer;min-width:84px}
+button:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+button.ok{background:var(--muted)}
+.ph{color:var(--warn)}
+footer{color:var(--muted);font-size:13px}
+@media (max-width:480px){.meta{grid-template-columns:1fr}.meta dt{margin-top:4px}}
+</style>
+<style>
+:root{--done:#1f7a45;--done-soft:#e3f3e8;--todo:#b3261e;--todo-soft:#fbe7e5}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--done:#6fd39a;--done-soft:#183324;--todo:#f28b82;--todo-soft:#3a1d1b}}
+:root[data-theme="dark"]{--done:#6fd39a;--done-soft:#183324;--todo:#f28b82;--todo-soft:#3a1d1b}
+.card{border-width:2px;border-color:var(--todo);background:linear-gradient(var(--todo-soft),var(--todo-soft)) top/100% 4px no-repeat,var(--surface);transition:border-color .2s}
+.card.feito{--fill:#17532f;border-color:var(--fill);background:var(--fill);color:#ffffff}
+.card.feito .num,.card.feito .meta dt,.card.feito .label{color:rgba(255,255,255,.75)}
+.card.feito pre,.card.feito kbd{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);color:#ffffff}
+.card.feito .ph{color:#ffd58a}
+.card.feito button{background:#ffffff;color:#17532f}
+.card.feito .pill{background:rgba(255,255,255,.18);color:#ffffff}
+.card.feito .note{background:rgba(255,255,255,.12)}
+.card.feito .note b{color:#ffd58a}
+pre.copiado{border-color:var(--done)}
+.busca{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.busca button{min-width:0;padding:3px 10px;font-size:12px;background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.card.feito .busca button{background:transparent;color:#ffffff;border-color:rgba(255,255,255,.6)}
+.marca{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--todo);cursor:pointer;user-select:none}
+.card.feito .marca{color:#ffffff}
+.marca input{width:20px;height:20px;margin:0;accent-color:var(--done);cursor:pointer}
+@media (prefers-reduced-motion: reduce){.card{transition:none}}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Leo Simao · Pamela · Painel → Editor do cliente</span>
+  <h1>Ajustes do bot</h1>
+  <p style="color:var(--muted)">Um bloco por campo do painel. Depois de colar, clique em <b>Salvar</b> na seção. A mudança vale para as próximas mensagens.</p>
+</header>
+
+<h2>Conversa 34613: bot repetiu o que o aluno disse</h2>
+<div class="case">
+  <div class="chat">
+    <span>Equipe: …livro <i>Meditações</i>… Me conta se já conseguiu acessar?</span>
+    <span>Aluno: Bom diaa / Nao acessei aínda</span>
+    <span>Bot: Bom dia!</span>
+    <span class="bad">Bot: Entendi que você ainda não conseguiu acessar o livro.</span>
+    <span>Bot: Posso te guiar no passo a passo.</span>
+    <span class="bad">Bot: Qual parte você não conseguiu acessar?</span>
+  </div>
+  <div class="note">
+    <p><b>Por que aconteceu:</b> a regra "não repetir o relato do aluno" já existe, mas só como uma frase no meio da <b>Frase de apresentação</b> (Persona), e o bot ignorou. Vamos reforçá-la nos campos específicos.</p>
+    <p><b>Segundo problema:</b> não há nada cadastrado sobre <b>onde fica o livro Meditações</b>. Sem o caminho, o bot não consegue ir direto ao ponto e acaba fazendo pergunta. Isso vai contra a regra que já existe em "Comportamentos a evitar": <i>"Fazer perguntas ao aluno"</i>. O bloco 4 resolve.</p>
+  </div>
+</div>
+
+<!-- 1 -->
+<article class="card" data-conversa="34613">
+  <div class="card-head"><span class="num">1</span><span class="path">Tom e Contexto → Comportamentos adicionais a evitar</span><span class="pill add">Adicionar item</span></div>
+  <dl class="meta"><dt>Onde</dt><dd>Clique em <b>+ adicionar</b> no fim da lista e cole como um item novo.</dd></dl>
+  <div class="copy"><div class="copy-top"><span class="label">Novo item</span><button type="button" data-copy="c1">Copiar</button></div>
+  <pre id="c1">Começar a resposta repetindo, confirmando ou resumindo o que o aluno acabou de dizer (do tipo "entendi que…", "percebi que…", "compreendo que…"). Ir direto ao que resolve, como uma pessoa da equipe responderia no WhatsApp</pre></div>
+</article>
+
+<!-- 2 -->
+<article class="card" data-conversa="34613">
+  <div class="card-head"><span class="num">2</span><span class="path">Tom e Contexto → Tom por momento do lead</span><span class="pill rep">Substituir</span></div>
+  <dl class="meta">
+    <dt>Ctrl+F</dt><dd><kbd>dificuldade com acesso</kbd></dd>
+    <dt>Campo</dt><dd><b>Nuance adicional</b> desse item. Apague o texto atual e cole o novo. Situação e Tom ficam iguais.</dd>
+  </dl>
+  <div class="copy"><div class="copy-top"><span class="label">Nuance adicional</span><button type="button" data-copy="c2">Copiar</button></div>
+  <pre id="c2">Ir direto ao primeiro passo, sem repetir nem confirmar o que o aluno contou. Passos curtos, um por linha, sem termos técnicos e sem infantilizar. Se precisar ver o erro, pedir um print sem a senha.</pre></div>
+</article>
+
+<!-- 3 -->
+<article class="card" data-conversa="34613">
+  <div class="card-head"><span class="num">3</span><span class="path">Estratégia de Atendimento → Regras gerais de atendimento</span><span class="pill rep">Substituir</span></div>
+  <dl class="meta">
+    <dt>Ctrl+F</dt><dd><kbd>Quando o aluno responder a uma mensagem enviada pela equipe</kbd></dd>
+    <dt>Campo</dt><dd>Substitua esse item inteiro pelo texto abaixo.</dd>
+  </dl>
+  <div class="copy"><div class="copy-top"><span class="label">Item novo</span><button type="button" data-copy="c3">Copiar</button></div>
+  <pre id="c3">Quando o aluno responder a uma mensagem enviada pela equipe, responder ao que ele disse considerando o assunto daquela mensagem, sem repetir a mensagem da equipe e sem repetir ou confirmar a resposta dele. Se ele disser que ainda não fez o que a mensagem pedia, mostrar já o primeiro passo cadastrado, sem perguntar</pre></div>
+</article>
+
+<!-- 4 -->
+<article class="card" data-conversa="34613">
+  <div class="card-head"><span class="num">4</span><span class="path">Base de Conhecimento → Perguntas frequentes</span><span class="pill add">Adicionar item</span></div>
+  <dl class="meta"><dt>Antes</dt><dd>Troque os trechos em <span class="ph">[colchetes]</span> pelo caminho real da área de membros. Eles não estão no banco e eu não posso inventar.</dd></dl>
+  <div class="copy"><div class="copy-top"><span class="label">Pergunta</span><button type="button" data-copy="c4a">Copiar</button></div>
+  <pre id="c4a">Onde encontro o livro Meditações? / Ainda não acessei o livro / Como acesso o livro com comentários do Léo?</pre></div>
+  <div class="copy"><div class="copy-top"><span class="label">Resposta</span><button type="button" data-copy="c4b">Copiar</button></div>
+  <pre id="c4b">O livro Meditações com comentários do Léo fica na sua área de membros. Entre em https://membros.calmadamente.com.br/login com o e-mail da compra, depois clique em [nome do menu ou módulo] e em [nome do livro como aparece na tela]. [Vale para quais turmas: ex. todas as turmas do Calma da Mente]</pre></div>
+</article>
+
+<!-- 5 -->
+<article class="card" data-conversa="34613">
+  <div class="card-head"><span class="num">5</span><span class="path">Catálogo → Calma da Mente | Transcender → Info geral</span><span class="pill opt">Conferir</span></div>
+  <div class="note">
+    <p><b>Possível conflito:</b> hoje está cadastrado que <i>"livros e outros bônus dependem da compra de cada aluno e vão para a equipe humana"</i>. Com isso, o bot pode transferir para humano em vez de ensinar o caminho do Meditações.</p>
+    <p>Se o Meditações está liberado para todos os alunos na área de membros, troque só o trecho final dessa frase. Se não está, ignore este bloco e me avise para quais turmas ele vale.</p>
+  </div>
+  <dl class="meta">
+    <dt>Ctrl+F</dt><dd><kbd>livros e outros bônus</kbd></dd>
+    <dt>Campo</dt><dd>Substitua a última frase do texto, de "Tempo de acesso" até o fim, pelo texto abaixo.</dd>
+  </dl>
+  <div class="copy"><div class="copy-top"><span class="label">Trecho novo</span><button type="button" data-copy="c5">Copiar</button></div>
+  <pre id="c5">Tempo de acesso, segunda cadeira, outros livros e bônus dependem da compra de cada aluno e vão para a equipe humana. O livro Meditações com comentários do Léo já está na área de membros e o caminho está na Base de Conhecimento</pre></div>
+</article>
+
+<footer>Fonte: banco do CS-IA (consulta somente leitura) · conversa 34613 · 27/10/2026. Todas as mudanças são feitas pelo painel, nunca direto no banco.</footer>
+</div>
+
+<script>
+document.querySelectorAll('article.card').forEach(function(card,i){
+  var id='feito-'+(card.dataset.conversa||'x')+'-'+(i+1), key='ajustes:'+id;
+  var lab=document.createElement('label'); lab.className='marca';
+  var cb=document.createElement('input'); cb.type='checkbox'; cb.id=id;
+  var txt=document.createElement('span');
+  lab.appendChild(cb); lab.appendChild(txt);
+  card.querySelector('.card-head').appendChild(lab);
+  function pinta(){card.classList.toggle('feito',cb.checked);txt.textContent=cb.checked?'Copiado':'Pendente'}
+  function marca(v){cb.checked=v;pinta();try{localStorage.setItem(key,v?'1':'0')}catch(e){}}
+  try{cb.checked=localStorage.getItem(key)==='1'}catch(e){}
+  pinta();
+  cb.addEventListener('change',function(){marca(cb.checked);if(!cb.checked)card.querySelectorAll('pre.copiado').forEach(function(p){p.classList.remove('copiado')})});
+  // fica verde quando todos os textos do bloco foram copiados
+  card._copiou=function(pre){pre.classList.add('copiado');if(!card.querySelector('pre:not(.copiado)'))marca(true)};
+});
+// botão de copiar ao lado de cada palavra do Ctrl+F (não muda a cor do bloco)
+document.querySelectorAll('.meta dd > kbd').forEach(function(k){
+  var dd=k.parentNode; dd.classList.add('busca');
+  var b=document.createElement('button'); b.type='button'; b.textContent='Copiar busca';
+  dd.appendChild(b);
+  b.addEventListener('click',function(){
+    function ok(){b.textContent='Copiado';setTimeout(function(){b.textContent='Copiar busca'},1600)}
+    function fb(){var r=document.createRange();r.selectNodeContents(k);var s=getSelection();s.removeAllRanges();s.addRange(r);try{document.execCommand('copy');ok()}catch(e){b.textContent='Ctrl+C'}}
+    try{navigator.clipboard.writeText(k.textContent).then(ok,fb)}catch(e){fb()}
+  });
+});
+document.querySelectorAll('button[data-copy]').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var el=document.getElementById(btn.dataset.copy), txt=el.textContent;
+    function done(){var c=btn.closest('article.card');if(c&&c._copiou)c._copiou(el);btn.textContent='Copiado';btn.classList.add('ok');setTimeout(function(){btn.textContent='Copiar';btn.classList.remove('ok')},1600)}
+    function fallback(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r);try{document.execCommand('copy');done()}catch(e){btn.textContent='Ctrl+C'}}
+    try{navigator.clipboard.writeText(txt).then(done,fallback)}catch(e){fallback()}
+  });
+});
+</script>
