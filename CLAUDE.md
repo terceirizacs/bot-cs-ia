@@ -21,6 +21,7 @@ Os arquivos abaixo são a **fonte da verdade** sobre o sistema. **Não** estão 
 | Traduzir "quero que o bot faça X" → "vá em tal tela/campo" e decidir **configurável vs estrutural** | `conhecimento/03-o-que-muda-onde.md` |
 | Pedido **estrutural** (montar chamado pro dev) ou saber onde a informação fica no banco | `conhecimento/04-referencia-tecnica.md` |
 | Conferir tom, formato e nível de detalhe da resposta ideal | `conhecimento/05-exemplos-de-pedidos.md` |
+| Como o time humano respondeu casos em que o bot errou + instruções da gestão (ler **antes** de ajustar um tema já registrado) | `conhecimento/06-padroes-de-resposta-humana.md` |
 | Conectar o banco em modo somente leitura (tarefa técnica do Tiago) | `guia-conectar-supabase-readonly.md` |
 
 **Roteiro mínimo para todo pedido** (detalhado em `INSTRUCOES-DO-PROJETO.md`):
