@@ -104,6 +104,7 @@ Se o pedido cair em algum destes casos, **não dá pra fazer pelo painel**. Avis
 | Mudar o comportamento do **"Supervisor"** (a checagem de qualidade do bot) | Componente central, igual pra todos. |
 | Fazer o bot **não repetir** a mesma despedida/mensagem (ex: cliente agradece duas vezes) | Já é **estrutural e automático** desde 06/2026 — ver nota abaixo. |
 | O bot está **com erro, fora do ar ou não responde** | É um problema técnico, não de configuração. |
+| O bot **passou para humano** uma pergunta que parecia simples | Se a informação não está cadastrada, passar para humano é a regra (não é defeito): cadastre a informação (Base de Conhecimento, Catálogo ou Procedimentos). Se a informação **está** cadastrada e mesmo assim foi para humano, é um caso para o time técnico (o Supervisor é igual para todos). |
 
 > Mesmo nesses casos, o assistente deve explicar **o que** precisa ser feito em linguagem simples e dar um resumo pro chamado — sem mandar a pessoa embora "no vácuo".
 

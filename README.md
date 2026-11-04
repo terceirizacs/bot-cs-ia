@@ -4,6 +4,8 @@ Esta pasta tem **tudo o que você precisa para criar um Projeto no Claude.ai** q
 
 > Esta pasta é a **fonte** da documentação. O Projeto no Claude.ai é uma **cópia** dela. Sempre que algo mudar no sistema, atualize aqui e suba de novo (ver "Como manter atualizado", no fim).
 
+> **Visibilidade (04/11/2026):** este repositorio e PUBLICO, por decisao do dono ("Vamos deixar como estao"). Antes de subir qualquer arquivo, confira: sem chave/token/senha/webhook do Discord, sem telefone/e-mail/CPF/nome de aluno, sem `pinData`, sem hosts/URLs do n8n e do Supabase, sem caminhos de webhook, URLs de fila e IDs de credencial.
+
 ---
 
 ## Para que serve esse Projeto

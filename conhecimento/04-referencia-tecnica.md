@@ -18,6 +18,18 @@ O CS-IA tem três peças:
 
 Quando chega uma mensagem, o n8n descobre de qual cliente ela é (pelo número da inbox do Chatwoot), busca a configuração desse cliente no Supabase e responde.
 
+## Motor em produção (estado em 04/11/2026)
+
+Dois "agentes" trabalham em cada resposta: o **Agent** escreve a resposta (consultando as 6 ferramentas internas) e o **Supervisor** confere se a resposta pode ir ao cliente ou se a conversa deve passar para uma pessoa. Se não há informação cadastrada, a regra do dono é **abrir handoff** (passar para humano), e o Supervisor é quem garante isso.
+
+- **Modelos (desde 04/11/2026 12:55 UTC; acompanhada 30 min sem critério de reversão):** Agent e Supervisor em `gemini-3.8-flash`; ferramentas e conferência do formato de saída (Parser) em `gemini-3.5-flash-lite`; reservas da OpenAI em `gpt-5.4-mini` (Agent e ferramentas) e `gpt-5.4-nano` (Supervisor). Áudio: `gemini-3.5-flash-lite`, com Whisper da OpenAI como reserva. Custo é estimativa; revisão em dezembro.
+- **Saída padrão (desde 03/11/2026):** se o Supervisor devolver uma decisão que o motor não reconhece, o bot não fica mudo: vira nota privada e a conversa é aberta para a equipe.
+- **Regras do envio (Code `03-consolidar-dados.js`):** só vira resposta ao cliente o que o Supervisor mandou como resposta, até 1.500 caracteres, sem marcadores internos; link só se estiver no cadastro do cliente ou tiver sido dito na conversa por um humano ou pelo próprio cliente; fora disso vira handoff com o motivo na nota privada.
+- **Monitor de modelos (fluxo `Monitor Modelos CS-IA`):** a cada 5 minutos testa `gemini-3.8-flash` e `gpt-5.4-mini` e avisa o time técnico no Discord na segunda falha seguida. Não vigia as ferramentas, o Parser, a reserva do Supervisor nem erros dentro do atendimento.
+- **Aviso:** a troca para o 3.8 é recente (04/11/2026); no 1º acompanhamento de 30 min não houve erro nem critério de reversão, mas período curto não prova estabilidade a longo prazo. Prazo externo: em 01/12/2026 o `gemini-2.5-flash` passa a ser redirecionado pelo Google para `gemini-3.5-flash-lite`.
+
+Os fluxos e os códigos de produção estão em `workflow/bot-cs-ia/` do repositório interno do projeto (`Json/` e `code-nodes/`).
+
 ## Como o briefing vira o comportamento do bot
 
 ```
@@ -70,7 +82,7 @@ Quando um pedido for estrutural, use esta tabela para dizer ao dev (no resumo do
 | Mudar a estrutura do texto de uma seção (vale pra todos os clientes) | `infra/prompt-templates/*.md` + re-render |
 | Como o bot lê áudio ou imagem | Workflow n8n (bloco de áudio usa Gemini) |
 | Debounce, consolidação de dados | Code nodes `01-combina-conteudo-msg.js`, `03-consolidar-dados.js` |
-| Tratamento de erros / bot fora do ar | Workflow `Error CS AI` no n8n |
+| Tratamento de erros / bot fora do ar | Workflow `Error CS AI` no n8n (falhas definitivas viram nota privada + conversa aberta); alerta de modelo fora do ar: fluxo `Monitor Modelos CS-IA` |
 | Quem pode acessar o painel | Tabela `usuarios_autorizados` (gerenciada via SQL pelo time técnico) |
 
 **Modelo de resumo pro chamado** (o assistente preenche e entrega pra equipe colar):
