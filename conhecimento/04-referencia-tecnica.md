@@ -25,10 +25,12 @@ Dois "agentes" trabalham em cada resposta: o **Agent** escreve a resposta (consu
 - **Modelos (desde 04/11/2026 12:55 UTC; acompanhada 30 min sem critério de reversão):** Agent e Supervisor em `gemini-3.8-flash`; ferramentas e conferência do formato de saída (Parser) em `gemini-3.5-flash-lite`; reservas da OpenAI em `gpt-5.4-mini` (Agent e ferramentas) e `gpt-5.4-nano` (Supervisor). Áudio: `gemini-3.5-flash-lite`, com Whisper da OpenAI como reserva. Custo é estimativa; revisão em dezembro.
 - **Saída padrão (desde 03/11/2026):** se o Supervisor devolver uma decisão que o motor não reconhece, o bot não fica mudo: vira nota privada e a conversa é aberta para a equipe.
 - **Regras do envio (Code `03-consolidar-dados.js`):** só vira resposta ao cliente o que o Supervisor mandou como resposta, até 1.500 caracteres, sem marcadores internos; link só se estiver no cadastro do cliente ou tiver sido dito na conversa por um humano ou pelo próprio cliente; fora disso vira handoff com o motivo na nota privada.
+- **Trava de promessa de encaminhar (desde 05/11/2026):** se a resposta promete encaminhar, repassar ou acionar a equipe (ex.: "vou encaminhar", "a equipe vai analisar") sem que o bot tenha feito o handoff, a resposta não é enviada: vira handoff com a nota "O bot prometeu encaminhar o caso sem acionar a equipe. Texto não enviado: ...". Promessas de baixa urgência (como repassar um feedback) entram na regra por decisão do dono. Em produção há pouco tempo; o efeito real ainda não foi medido.
+- **Item 4c do Supervisor (desde 05/11/2026):** a checagem aceita também a resposta que só acolhe e pergunta o motivo do reembolso quando as fontes do cliente mandam perguntar o motivo antes de encaminhar. Antes, essa resposta era barrada em todo cliente com essa regra. Medido em testes, sem prova em produção.
 - **Monitor de modelos (fluxo `Monitor Modelos CS-IA`):** a cada 5 minutos testa `gemini-3.8-flash` e `gpt-5.4-mini` e avisa o time técnico no Discord na segunda falha seguida. Não vigia as ferramentas, o Parser, a reserva do Supervisor nem erros dentro do atendimento.
 - **Aviso:** a troca para o 3.8 é recente (04/11/2026); no 1º acompanhamento de 30 min não houve erro nem critério de reversão, mas período curto não prova estabilidade a longo prazo. Prazo externo: em 01/12/2026 o `gemini-2.5-flash` passa a ser redirecionado pelo Google para `gemini-3.5-flash-lite`.
 
-Os fluxos e os códigos de produção estão em `workflow/bot-cs-ia/` do repositório interno do projeto (`Json/` e `code-nodes/`).
+Os fluxos e os códigos de produção ficam na pasta interna do projeto (`workflow/bot-cs-ia/`), fora deste repositório público; peça ao time técnico.
 
 ## Como o briefing vira o comportamento do bot
 

@@ -112,6 +112,21 @@ Se o pedido cair em algum destes casos, **não dá pra fazer pelo painel**. Avis
 
 ---
 
+## Notas privadas automáticas do bot (desde 04 e 05/11/2026)
+
+Quando o bot não manda a resposta e abre a conversa para a equipe, ele deixa uma **nota privada** com o motivo. Notas que a equipe pode ver, e o que significam:
+
+| Nota | O que significa | O que fazer |
+|---|---|---|
+| "O bot prometeu encaminhar o caso sem acionar a equipe. Texto não enviado: ..." | A resposta dizia que o caso seria encaminhado/repassado, mas o bot não tinha acionado a equipe. A resposta **não foi enviada** ao aluno e a conversa foi aberta para vocês. | Atender a conversa. Algumas são só um recado de baixa urgência (ex.: repassar um feedback). |
+| "Link fora do cadastro: ..." | A resposta trazia um link que não está no cadastro do cliente nem foi dito na conversa. Não foi enviada. | Se o link é válido, cadastre-o em **Procedimentos → Links úteis**. |
+| "A resposta do bot veio vazia / longa demais / trouxe texto interno / trouxe marcador sem preencher" | A resposta não estava em condições de ir ao aluno. | Atender a conversa; se se repetir num cliente, avisar o time técnico. |
+| "O Supervisor devolveu decisão inválida..." | O motor não entendeu a decisão da checagem de qualidade. | Atender a conversa; avisar o time técnico se for frequente. |
+
+**Reembolso e cancelamento:** se o cadastro do cliente (Persona ou Procedimentos) manda **perguntar o motivo antes de encaminhar**, o bot pode responder só acolhendo e perguntando o motivo, sem chamar a equipe na primeira vez. Isso só vale quando o cadastro manda; é uma regra de leitura do cadastro, igual para todos os clientes. **Se o aluno não responder o motivo, ninguém é chamado** (isso ainda não foi medido). Para mudar esse comportamento num cliente, ajuste o que está escrito nessa regra no cadastro dele.
+
+---
+
 ## Cuidado ao escrever exemplos: não cole frases prontas em "tom" e estratégia
 
 Vale para os campos **Tom por momento do lead** (Tom e Contexto) e para textos de tom/estratégia em geral:
