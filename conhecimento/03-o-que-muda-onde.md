@@ -29,10 +29,14 @@ A maioria esmagadora dos pedidos é **configurável**. A lista de itens estrutur
 | ...seja mais **proativo**, ou só **responda quando perguntado** | Persona → **Postura do bot** |
 | ...possa (ou não) usar **gírias** | Persona → **Bot pode usar gírias leves** |
 | ...mude o **nome** | Persona → **Como o bot deve se chamar** |
-| ...se **apresente de outro jeito** ou com outro cargo (ex: "consultora") | Persona → **Frase de apresentação do bot** |
+| ...se **apresente de outro jeito** ou com outro cargo (ex: "consultora") | Persona → **Frase de apresentação do bot** (sem as palavras "virtual", "IA", "robô", "bot" ou "automatizado": ver nota abaixo) |
+| ...**passe para a equipe** quando o aluno perguntar se está falando com IA, robô ou pessoa | Persona → **Quando o lead deve ser escalado pra humano** (adicionar uma frase com essa situação). Sem essa regra, o bot responde só "Eu sou [nome], do time [X]" e segue o assunto |
+| ...**diga que é uma IA** ou **diga que é humano** | **Não dá.** Desde 12/11/2026 o bot nunca se declara virtual, IA, robô, humano ou não humano, em nenhum cliente (regra do motor). O que se ajusta é o nome e o time da apresentação e se a pergunta deve ir para a equipe (linha acima) |
 | ...fale **diferente quando o cliente está chateado / empolgado / sumido** | Tom e Contexto → **Tom por momento do lead** (adicionar um item) |
 | ...**pare de fazer** algo específico (ex: parar de mandar emoji demais) | Tom e Contexto → **Comportamentos adicionais a evitar** (adicionar uma frase) |
 | ...aja diferente **fora do horário comercial** | Tom e Contexto → **Janela de atendimento** + **Tom a adotar fora do horário** |
+
+> 🪪 **Como o bot fala de si (desde 12/11/2026).** Sobre quem é, o bot diz só o **nome e o time** que estão na Persona. Ele **nunca** diz que é assistente ou atendente virtual, IA, robô, bot, automatizado, humano ou não humano. Se uma resposta sair assim, ela **não é enviada** e a conversa vai para a equipe com uma nota. Por isso: na **Frase de apresentação do bot**, escreva nome e time (ex.: "do time de Customer Success da [empresa]"), sem "virtual" nem "IA". Se a frase estiver **vazia**, o painel usa um texto padrão que diz "atendente virtual", e, se o bot repetir esse texto, a resposta é barrada e a conversa vai para a equipe: **preencha sempre a frase**. Mencionar uma ferramenta do produto ("a IA do curso") é permitido.
 
 ---
 
@@ -104,6 +108,9 @@ Se o pedido cair em algum destes casos, **não dá pra fazer pelo painel**. Avis
 | Mudar o comportamento do **"Supervisor"** (a checagem de qualidade do bot) | Componente central, igual pra todos. |
 | Fazer o bot **não repetir** a mesma despedida/mensagem (ex: cliente agradece duas vezes) | Já é **estrutural e automático** desde 06/2026 — ver nota abaixo. |
 | O bot está **com erro, fora do ar ou não responde** | É um problema técnico, não de configuração. |
+| O bot **não respondeu** um "obrigado", um "já consegui" ou uma resposta automática | É proposital (desde 11/11/2026): quando todas as mensagens do aluno naquele momento são só agradecimento, despedida, confirmação de que deu certo ou resposta automática, o bot fica em silêncio, sem nota. Se havia pergunta, pedido ou problema e o bot não respondeu nem passou para a equipe, é caso para o time técnico. |
+| O bot disse **"amanhã" ou "hoje"** para um evento no dia errado | Desde 12/11/2026 o bot recebe a data de hoje e só usa "hoje/amanhã" quando a data do evento está cadastrada e bate. Confira se a **data** do evento (aula, live, prazo) está escrita no cadastro; se está e o erro continua, é caso para o time técnico. |
+| O bot respondeu em **outro idioma**, narrou o próprio raciocínio ou se declarou **IA/humano** | Não deveria chegar ao aluno: o motor barra e manda para a equipe (desde 10, 11 e 12/11/2026). Se chegou, é caso para o time técnico. |
 | O bot **passou para humano** uma pergunta que parecia simples | Se a informação não está cadastrada, passar para humano é a regra (não é defeito): cadastre a informação (Base de Conhecimento, Catálogo ou Procedimentos). Se a informação **está** cadastrada e mesmo assim foi para humano, é um caso para o time técnico (o Supervisor é igual para todos). |
 
 > Mesmo nesses casos, o assistente deve explicar **o que** precisa ser feito em linguagem simples e dar um resumo pro chamado — sem mandar a pessoa embora "no vácuo".
@@ -112,7 +119,7 @@ Se o pedido cair em algum destes casos, **não dá pra fazer pelo painel**. Avis
 
 ---
 
-## Notas privadas automáticas do bot (desde 04 e 05/11/2026)
+## Notas privadas automáticas do bot (desde 04/11/2026; travas novas em 10, 11 e 12/11/2026)
 
 Quando o bot não manda a resposta e abre a conversa para a equipe, ele deixa uma **nota privada** com o motivo. Notas que a equipe pode ver, e o que significam:
 
@@ -122,6 +129,8 @@ Quando o bot não manda a resposta e abre a conversa para a equipe, ele deixa um
 | "Link fora do cadastro: ..." | A resposta trazia um link que não está no cadastro do cliente nem foi dito na conversa. Não foi enviada. | Se o link é válido, cadastre-o em **Procedimentos → Links úteis**. |
 | "A resposta do bot veio vazia / longa demais / trouxe texto interno / trouxe marcador sem preencher" | A resposta não estava em condições de ir ao aluno. | Atender a conversa; se se repetir num cliente, avisar o time técnico. |
 | "O Supervisor devolveu decisão inválida..." | O motor não entendeu a decisão da checagem de qualidade. | Atender a conversa; avisar o time técnico se for frequente. |
+| "A resposta do bot veio em outro idioma" | A resposta saiu em inglês ou espanhol. Não foi enviada. | Atender a conversa; avisar o time técnico se se repetir. |
+| Nota de que o bot se declarou IA, virtual, robô ou humano, ou de que não escalou a pergunta "é IA?" que o cadastro manda escalar (desde 12/11/2026) | A resposta não foi enviada. | Atender a conversa. Se o aluno perguntou se fala com IA ou pessoa, siga a orientação do cliente para essa pergunta. |
 
 **Reembolso e cancelamento:** se o cadastro do cliente (Persona ou Procedimentos) manda **perguntar o motivo antes de encaminhar**, o bot pode responder só acolhendo e perguntando o motivo, sem chamar a equipe na primeira vez. Isso só vale quando o cadastro manda; é uma regra de leitura do cadastro, igual para todos os clientes. **Se o aluno não responder o motivo, ninguém é chamado** (isso ainda não foi medido). Para mudar esse comportamento num cliente, ajuste o que está escrito nessa regra no cadastro dele.
 

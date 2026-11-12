@@ -52,6 +52,24 @@ O bot foi feito pra **nunca inventar**. Se perguntarem algo que não está cadas
 
 Então, quando alguém disser "o bot não soube responder X", na maioria das vezes **não é defeito**: é só uma informação que falta cadastrar (geralmente na **Base de Conhecimento** ou no **Catálogo**).
 
+## O que o bot faz com cada mensagem (desde 11/11/2026)
+
+A cada mensagem do aluno, o bot escolhe uma de três coisas:
+
+1. **Responder**, com o que está cadastrado.
+2. **Passar para a equipe** (escalar), deixando uma nota privada com o motivo.
+3. **Ficar em silêncio**, quando o aluno só agradeceu, se despediu, contou que deu certo ("já consegui") ou mandou uma resposta automática. Se houver qualquer pergunta, pedido ou problema, ele responde ou passa para a equipe.
+
+Antes de ir ao aluno, a resposta passa por uma checagem (o "Supervisor") e por travas automáticas. Resposta em outro idioma, com texto interno do bot ou em que ele se declara IA ou humano **não é enviada**: a conversa vai para a equipe com uma nota.
+
+## Como o bot se apresenta (desde 12/11/2026)
+
+O bot diz só o **nome e o time** cadastrados na Persona. Ele **nunca** diz que é assistente virtual, IA, robô ou humano, em nenhum cliente. Se o aluno pergunta "estou falando com uma IA?", ele passa para a equipe quando o cadastro do cliente manda; se o cadastro não diz nada, responde "Eu sou [nome], do time [X]" e segue o assunto.
+
+## Datas (desde 12/11/2026)
+
+O bot sabe a data e a hora de Brasília. Ele só diz "hoje", "amanhã" ou o dia da semana de uma aula, live ou prazo quando a data desse evento está cadastrada (ou foi dita na conversa) e bate com o dia de hoje.
+
 ## O que NÃO dá pra mudar pelo painel
 
 Algumas coisas são "estruturais" — fazem parte do motor do bot e são iguais para todos os clientes. Exemplos: o tamanho/formato das mensagens, as regras de quando o bot escala, a maneira como ele evita inventar respostas, ou adicionar uma capacidade totalmente nova.
