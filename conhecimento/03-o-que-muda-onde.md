@@ -128,7 +128,7 @@ Quando o bot não manda a resposta e abre a conversa para a equipe, ele deixa um
 
 | Nota | O que significa | O que fazer |
 |---|---|---|
-| "O bot prometeu encaminhar o caso sem acionar a equipe. Texto não enviado: ..." | A resposta dizia que o caso seria encaminhado/repassado, mas o bot não tinha acionado a equipe. A resposta **não foi enviada** ao aluno e a conversa foi aberta para vocês. | Atender a conversa. Algumas são só um recado de baixa urgência (ex.: repassar um feedback). |
+| "O bot prometeu encaminhar o caso sem acionar a equipe. Texto não enviado: ..." | A resposta prometia registrar, anotar, repassar, avisar ou levar algo para a equipe, o professor, a coordenação ou outro setor (ou dizia que "a equipe vai verificar"), mas o bot não tinha acionado a equipe. Desde 13/11/2026 a regra pega também frases mais longas e no passado ("já registrei com a equipe…"). A resposta **não foi enviada** ao aluno e a conversa foi aberta para vocês. | Atender a conversa e, se for o caso, fazer de fato o que o bot ia prometer (ex.: repassar o problema ao professor). Algumas são só um recado de baixa urgência (ex.: um elogio ou feedback). |
 | "Link fora do cadastro: ..." | A resposta trazia um link que não está no cadastro do cliente nem foi dito na conversa. Não foi enviada. | Se o link é válido, cadastre-o em **Procedimentos → Links úteis**. |
 | "A resposta do bot veio vazia / longa demais / trouxe texto interno / trouxe marcador sem preencher" | A resposta não estava em condições de ir ao aluno. | Atender a conversa; se se repetir num cliente, avisar o time técnico. |
 | "O Supervisor devolveu decisão inválida..." | O motor não entendeu a decisão da checagem de qualidade. | Atender a conversa; avisar o time técnico se for frequente. |
