@@ -62,6 +62,8 @@ A cada mensagem do aluno, o bot escolhe uma de três coisas:
 
 Antes de ir ao aluno, a resposta passa por uma checagem (o "Supervisor") e por travas automáticas. Resposta em outro idioma, com texto interno do bot ou em que ele se declara IA ou humano **não é enviada**: a conversa vai para a equipe com uma nota.
 
+Desde 13/11/2026, o último ajuste antes do envio evita repetição: o bot não fica chamando o aluno pelo nome em toda resposta, nem repete "é só me chamar" ou "fico à disposição" a cada mensagem (olha as últimas 12 horas da conversa).
+
 ## Como o bot se apresenta (desde 12/11/2026)
 
 O bot diz só o **nome e o time** cadastrados na Persona. Ele **nunca** diz que é assistente virtual, IA, robô ou humano, em nenhum cliente. Se o aluno pergunta "estou falando com uma IA?", ele passa para a equipe quando o cadastro do cliente manda; se o cadastro não diz nada, responde "Eu sou [nome], do time [X]" e segue o assunto.

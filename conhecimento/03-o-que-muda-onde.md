@@ -107,6 +107,7 @@ Se o pedido cair em algum destes casos, **não dá pra fazer pelo painel**. Avis
 | Mudar a **estrutura do texto** de uma seção para **todos os clientes** | Mexe no "modelo" (template) compartilhado. |
 | Mudar o comportamento do **"Supervisor"** (a checagem de qualidade do bot) | Componente central, igual pra todos. |
 | Fazer o bot **não repetir** a mesma despedida/mensagem (ex: cliente agradece duas vezes) | Já é **estrutural e automático** desde 06/2026 — ver nota abaixo. |
+| Fazer o bot **parar de repetir o nome do aluno** ou o **"é só me chamar" / "fico à disposição"** em toda resposta | Já é **estrutural e automático** desde 13/11/2026 — ver nota abaixo. Não precisa cadastrar nada. |
 | O bot está **com erro, fora do ar ou não responde** | É um problema técnico, não de configuração. |
 | O bot **não respondeu** um "obrigado", um "já consegui" ou uma resposta automática | É proposital (desde 11/11/2026): quando todas as mensagens do aluno naquele momento são só agradecimento, despedida, confirmação de que deu certo ou resposta automática, o bot fica em silêncio, sem nota. Se havia pergunta, pedido ou problema e o bot não respondeu nem passou para a equipe, é caso para o time técnico. |
 | O bot disse **"amanhã" ou "hoje"** para um evento no dia errado | Desde 12/11/2026 o bot recebe a data de hoje e só usa "hoje/amanhã" quando a data do evento está cadastrada e bate. Confira se a **data** do evento (aula, live, prazo) está escrita no cadastro; se está e o erro continua, é caso para o time técnico. |
@@ -116,6 +117,8 @@ Se o pedido cair em algum destes casos, **não dá pra fazer pelo painel**. Avis
 > Mesmo nesses casos, o assistente deve explicar **o que** precisa ser feito em linguagem simples e dar um resumo pro chamado — sem mandar a pessoa embora "no vácuo".
 
 > ✅ **Anti-repetição já é nativo do motor (desde 06/2026).** O bot agora tem, no próprio motor, uma regra que o impede de repetir uma mensagem que ele já enviou na conversa — e um cuidado especial pra quando o cliente **agradece ou se despede uma segunda vez** (aí ele responde algo curtinho e diferente, em vez de repetir a despedida inteira). **A equipe não precisa cadastrar nada por cliente pra isso** — vale automaticamente pra todos. Se alguém pedir "faz o bot não repetir a despedida", a resposta é: *"Isso já está resolvido no próprio bot, não precisa configurar nada."*
+
+> ✅ **Nome e fecho repetidos também já são tratados pelo motor (desde 13/11/2026).** Se o bot já chamou o aluno pelo primeiro nome nas últimas 12 horas, as respostas seguintes saem sem o nome quando ele é só um chamamento ("Maria, o link…" vira "O link…"). E a frase final de disponibilidade ("é só me chamar", "estou por aqui", "fico à disposição") sai quando já foi dita nas últimas 12 horas ou quando o aluno só confirmou ("ok", "entendi", "obrigado"); se não sobrar nada além de "Combinado!", o bot fica em silêncio. Fecho com condição concreta ("quando passar dos 7 dias, é só me chamar") continua. **Não cadastre regra por cliente para isso.** Ressalvas: o bot conhece só o primeiro nome do contato no WhatsApp/Chatwoot (apelido não entra), e a medida em produção ainda está pendente. Se ainda aparecer repetição, é caso para o time técnico.
 
 ---
 
